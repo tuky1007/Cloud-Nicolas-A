@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRC</title>
+    <style>
+        /* Estilos previos */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-bar {
+            background-color: #3766CB;
+            height: 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header {
+            background-color: #F32E61;
+            color: white;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: auto;
+            width: 100%;
+            position: fixed;
+            top: 20px;
+            z-index: 999;
+            padding: 0 20px;
+        }
+
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 5px;
+            margin-top: 100px;
+        }
+
+        .graph {
+            margin: 10px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #3766CB;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+
+        img.logo-gov2 {
+            height: 30px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        img.logo-gov {
+            height: 20px;
+            width: auto;
+            margin-left: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .edit-input {
+            width: 100%;
+        }
+
+        .edit-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .edit-button:hover {
+            background-color: #45a049; /* Darker Green */
+        }
+
+        .save-button {
+            background-color: #008CBA; /* Blue */
+        }
+
+        .save-button:hover {
+            background-color: #006080; /* Darker Blue */
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <img src="{% static 'IMAGENES/gov.png' %}" alt="GOV.CO" class="logo-gov">
+    </div>
+    <header>
+        <div class="login-container">
+            <img src="{% static 'IMAGENES/logo_crc.png' %}" alt="Logo CRC">
+        </div>
+    </header>
+    <main>
+        <table>
+            <tr>
+                <th>Habilitar Usuario</th>
+                <th>Nombre</th>
+                <th>Rol</th>
+                <th>Fecha de Inicio</th>
+                <th>Editar</th>
+            </tr>
+            <tr id="user1">
+                <td><input type="checkbox" checked disabled></td>
+                <td><input type="text" value="Sofia Rebolledo" class="edit-input" disabled></td>
+                <td><input type="text" value="Administrador" class="edit-input" disabled></td>
+                <td><input type="text" value="28 abril 2024" class="edit-input" disabled></td>
+                <td><button class="edit-button" onclick="editRow('user1')">Editar</button></td>
+            </tr>
+        </table>
+    </main>
+    <footer>
+        <img src="{% static 'IMAGENES/gov2.png' %}" alt="GOV2" class="logo-gov2">
+    </footer>
+
+    <script>
+        function editRow(rowId) {
+            const row = document.getElementById(rowId);
+            const inputs = row.getElementsByTagName('input');
+
+            // Hacer los campos de entrada editables
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].removeAttribute('disabled');
+            }
+
+            // Cambiar el botón "Editar" por el botón "Guardar"
+            const editButton = row.querySelector('.edit-button');
+            editButton.innerHTML = 'Guardar';
+            editButton.classList.remove('edit-button');
+            editButton.classList.add('save-button');
+            editButton.setAttribute('onclick', `saveRow('${rowId}')`);
+        }
+
+        function saveRow(rowId) {
+            const row = document.getElementById(rowId);
+            const inputs = row.getElementsByTagName('input');
+
+            // Hacer los campos de entrada no editables
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].setAttribute('disabled', true);
+            }
+
+            // Cambiar el botón "Guardar" por el botón "Editar"
+            const saveButton = row.querySelector('.save-button');
+            saveButton.innerHTML = 'Editar';
+            saveButton.classList.remove('save-button');
+            saveButton.classList.add('edit-button');
+            saveButton.setAttribute('onclick', `editRow('${rowId}')`);
+        }
+    </script>
+</body>
+</html>

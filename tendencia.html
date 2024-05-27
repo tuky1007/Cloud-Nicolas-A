@@ -1,0 +1,296 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .top-bar {
+            background-color: #3766CB;
+            height: 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+        header {
+            background-color: #F32E61;
+            color: white;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: auto;
+            width: 100%;
+            position: fixed;
+            top: 20px;
+            z-index: 999;
+            padding: 0 20px;
+        }
+        nav {
+            background: linear-gradient(to bottom, #5b5a5a, white);
+            color: black;
+            padding: 10px;
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+            position: fixed;
+            left: 0px; /* Cambia este valor para ajustar el desplazamiento */
+            top: 110px;
+        }
+
+
+nav div {
+    cursor: pointer;
+    padding: 10px;
+    font-weight: bold;
+    flex: 1; /* Para que cada elemento del navbar ocupe el mismo espacio disponible */
+    text-align: center;
+}
+
+
+        nav div.active {
+            background-color: white;
+        }
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 5px;
+            margin-top: 100px; 
+            position: relative; /* Agregado para posicionamiento absoluto de las listas */
+        }
+        .graph {
+            margin: 10px;
+            text-align: center;
+        }
+        footer {
+            background-color: #3766CB;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+        img.logo-gov2 {
+            height: 30px;
+            width: auto;
+            margin-right: 10px;
+        }
+        img.logo-gov {
+            height: 20px;
+            width: auto;
+            margin-left: 10px;
+        }
+        img.boton-login {
+            height: 40px;
+            width: auto;
+            margin-left: 1050px; 
+            position: absolute; 
+            top: 30px;
+            cursor: pointer;
+        }
+        img#login-button {
+            display: block; 
+        }
+        img#selected-login {
+            display: none; 
+        }
+        
+        .titulo-registro {
+            color: #F32E61;
+            font-size: 24px;
+            margin-bottom: 10px;
+            margin-top: 70px; /* Ajusta el margen superior según sea necesario */
+            margin-left: 0px;
+        }
+
+        .calendar-container {
+            text-align: left; /* Alinea el texto del calendario a la izquierda */
+            position: absolute;
+            left: 20px; /* Ajusta la posición izquierda del calendario */
+            top: 100px; /* Ajusta la posición superior del calendario */
+        }
+
+        .startdate {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #F32E61; /* Borde rosa */
+            background-color: #FEE9EC; /* Fondo rosa claro */
+            width: 200px; /* Ancho del calendario */
+        }
+
+        /* Estilos para la primera lista desplegable */
+        .dropdown-container-prepago {
+            position: absolute;
+            top: 150px; /* Espacio entre el título y la lista desplegable */
+            left: 20px; /* Ajusta el margen izquierdo */
+            width: 200px; /* Ancho de la lista desplegable */
+        }
+
+        .dropdown-container-prepago label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .dropdown-container-prepago select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #F32E61;
+            background-color: #FEE9EC; /* Fondo rosa claro */
+            font-size: 16px;
+        }
+
+        /* Estilos para la segunda lista desplegable */
+        .dropdown-container-operador {
+            position: absolute;
+            top: 220px; /* Espacio entre el título y la lista desplegable */
+            left: 20px; /* Ajusta el margen izquierdo */
+            width: 200px; /* Ancho de la lista desplegable */
+        }
+
+        .dropdown-container-operador label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .dropdown-container-operador select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #F32E61;
+            background-color: #FEE9EC; /* Fondo rosa claro */
+            font-size: 16px;
+        }
+        /* Estilos para el botón de descarga */
+        .boton-descargar {
+            position: absolute;
+            bottom: 10px; /* Ajusta la posición vertical */
+            right: 20px; /* Ajusta la posición horizontal */
+            cursor: pointer;
+            top: 370px;
+        }
+
+        /* Estilos para achicar la imagen del botón de descarga */
+        .boton-descargar-sm {
+            height: 40px; /* Altura reducida */
+            width: auto; /* Ancho ajustado automáticamente */
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <img src="{% static 'IMAGENES/gov.png' %}" alt="GOV.CO" class="logo-gov">
+    </div>
+    <header>
+        <div class="login-container">
+            <img src="{% static 'IMAGENES/logo_crc.png' %}" alt="Logo CRC">
+            <img class="boton-login" id="login-button" src="{% static 'IMAGENES/boton_login.png' %}" alt="Botón Login" onclick="toggleLogin()">
+            <img class="boton-login" id="selected-login" src="{% static 'IMAGENES/login_seleccionado.png' %}" alt="Botón Login Seleccionado" onclick="toggleLogin()" style="display: none;">
+        </div>
+        <nav>
+            <div class="nav-item" onclick="selectNavItem(this)">Inicio</div>
+            <div class="nav-item" onclick="selectNavItem(this)">Ver Histórico</div>
+            <div class="nav-item" onclick="selectNavItem(this)">Realizar Tendencia</div>
+            <div class="nav-item" onclick="selectNavItem(this)">Resultados índices</div>
+        </nav>
+    </header>
+    <main>
+        <div class="titulo-registro"><strong>Bienvenido a Realizar Tendencia</strong></div>
+        <!-- Calendario -->
+        <div class="calendar-container">
+            <label for="start"></label>
+            <input class="startdate" type="date" id="start" name="trip-start" min="2020-01-01" />
+        </div>
+
+        <!-- Lista desplegable para seleccionar entre prepago y postpago -->
+        <div class="dropdown-container-prepago">
+            <label for="tipo-plan">Tipo de Plan:</label>
+            <select id="tipo-plan" name="tipo-plan">
+                <option value="prepago">Prepago</option>
+                <option value="postpago">Postpago</option>
+            </select>
+        </div>
+
+        <!-- Lista desplegable para seleccionar entre Claro, Movistar, ETB y Tigo -->
+        <div class="dropdown-container-operador">
+            <label for="operador">Operador:</label>
+            <select id="operador" name="operador">
+                <option value="claro">Claro</option>
+                <option value="movistar">Movistar</option>
+                <option value="etb">ETB</option>
+                <option value="tigo">Tigo</option>
+            </select>
+        </div>
+        <!-- Botón de descarga -->
+        <img src="{% static 'IMAGENES/botondescargar.png' %}" alt="Descargar" class="boton-descargar boton-descargar-sm">
+
+    </main>
+    <footer>
+        <img src="{% static 'IMAGENES/gov2.png' %}" alt="GOV2" class="logo-gov2">
+    </footer>
+    <script>
+        function selectNavItem(element) {
+            // Eliminar la clase active de todos los elementos del navbar
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+    
+            // Añadir la clase active solo al elemento seleccionado
+            element.classList.add('active');
+    
+            // Obtener el texto del elemento seleccionado
+            var selectedItem = element.textContent.trim();
+    
+            // Redirigir a la URL correspondiente
+            switch (selectedItem) {
+                case 'Inicio':
+                    window.location.href = '/inicio/';
+                    break;
+                case 'Ver Histórico':
+                    window.location.href = '/historico/';
+                    break;
+                case 'Realizar Tendencia':
+                    window.location.href = '/tendencia/';
+                    break;
+                case 'Resultados índices':
+                    window.location.href = '/resultadosindices/';
+                    break;
+                default:
+                    break;
+            }
+        }
+    
+        function toggleLogin() {
+            var loginButton = document.getElementById('login-button');
+            var selectedLogin = document.getElementById('selected-login');
+    
+            if (loginButton.style.display === 'none') {
+                loginButton.style.display = 'block';
+                selectedLogin.style.display = 'none';
+            } else {
+                loginButton.style.display = 'none';
+                selectedLogin.style.display = 'block';
+                redirectToLogin(); 
+            }
+        }
+    
+        function redirectToLogin() {
+            window.location.href = '/login/';
+        }
+    </script>
+    
+</body>
+</html>

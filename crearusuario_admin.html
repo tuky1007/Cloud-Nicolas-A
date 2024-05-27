@@ -1,0 +1,271 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRC</title>
+    <style>
+        /* Estilos previos */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-bar {
+            background-color: #3766CB;
+            height: 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header {
+            background-color: #F32E61;
+            color: white;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: auto;
+            width: 100%;
+            position: fixed;
+            top: 20px;
+            z-index: 999;
+            padding: 0 20px;
+        }
+
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 5px;
+            margin-top: 100px;
+        }
+
+        .graph {
+            margin: 10px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #3766CB;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+
+        img.logo-gov2 {
+            height: 30px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        img.logo-gov {
+            height: 20px;
+            width: auto;
+            margin-left: 10px;
+        }
+
+        img.boton-login {
+            height: 40px;
+            width: auto;
+            margin-left: 1050px; 
+            position: absolute; 
+            top: 30px;
+            cursor: pointer;
+        }
+
+        img#login-button {
+            display: block; 
+        }
+
+        img#selected-login {
+            display: none; 
+        }
+
+        /* Agregar estilos para el formulario de registro */
+        .registro-form {
+            text-align: center;
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .registro-form label {
+            display: block;
+            width: 200px;
+            text-align: left;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+
+        .registro-form input[type="text"],
+        .registro-form input[type="password"] {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            width: 250px;
+            display: block;
+        }
+
+        .registro-form input[type="submit"] {
+            display: none;
+            /* Ocultar el botón Register */
+        }
+
+        .registro-form a {
+            text-decoration: none;
+            color: #3766CB;
+        }
+
+        .registro-form .column {
+            display: flex;
+            flex-direction: column;
+            
+        }
+
+        .registro-form .row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .titulo-registro {
+            color: #F32E61;
+            font-size: 24px;
+            margin-bottom: 0px;
+        }
+
+        .iniciar-sesion {
+            font-size: 12px;
+            color: #3766CB;
+            margin-bottom: 10px;
+        }
+
+        .rol-selector {
+    text-align: center;
+    color: black;
+    margin-top: -5px;
+    margin-bottom: 10px; /* Agregar margen inferior */
+}
+
+
+        .rol-selector select {
+    margin-left: -430px;
+    margin-top: 5px; /* Ajusta el valor según tus preferencias */
+    width: 120px;
+    border-radius: 25px; /* Ajusta el valor según tus preferencias */
+    padding: 10px;
+}
+
+
+        /* Estilos para el scroll */
+        .content-wrapper {
+            max-height: 80vh; /* Altura máxima del contenido */
+            overflow-y: auto; /* Activar el scroll vertical cuando sea necesario */
+        }
+
+        .boton-registro {
+            position: fixed;
+            bottom: 60px; /* Mover el botón hacia arriba */
+            right: 20px;
+            cursor: pointer;
+            transition: bottom 0.5s ease; /* Transición suave */
+            height: 50px;
+        }
+
+        .titulo-registro {
+            color: #F32E61;
+            font-size: 24px;
+            margin-bottom: 10px;
+            margin-top: -15px; /* Ajusta el margen superior según sea necesario */
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <img src="{% static 'IMAGENES/gov.png' %}" alt="GOV.CO" class="logo-gov">
+    </div>
+    <header>
+        <div class="login-container">
+            <img src="{% static 'IMAGENES/logo_crc.png' %}" alt="Logo CRC">
+        </div>
+    </header>
+    <main>
+        <!-- Envolver el contenido principal con la clase content-wrapper -->
+        <div class="content-wrapper">
+            <!-- Formulario de registro -->
+            <div class="registro-form">
+                <div class="titulo-registro">Registre su cuenta</div>
+                <a href="#" class="iniciar-sesion" onclick="redirectToLogin()">¿Ya tiene una cuenta? Iniciar sesión</a>
+                <div class="rol-selector">
+                    <label for="rol" style="color: black; margin-left: 0px;">Rol:</label>
+                    <select id="rol" name="rol">
+                        <option value="usuario">Usuario</option>
+                        <option value="administrador">Administrador</option>
+                        <option value="analista">Analista</option>
+                    </select>
+                </div>
+                <form onsubmit="return false;">
+                    <div class="row">
+                        <div class="column">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombre" placeholder="Nombre">
+                        </div>
+                        <div class="column">
+                            <label for="apellidos">Apellidos:</label>
+                            <input type="text" id="apellidos" placeholder="Apellidos">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <label for="telefono">Teléfono:</label>
+                            <input type="text" id="telefono" placeholder="Teléfono">
+                        </div>
+                        <div class="column">
+                            <label for="cedula">Cédula:</label>
+                            <input type="text" id="cedula" placeholder="Cédula">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <label for="email">Email:</label>
+                            <input type="text" id="email" placeholder="Email">
+                        </div>
+                        <div class="column">
+                            <label for="password">Contraseña:</label>
+                            <input type="password" id="password" placeholder="Contraseña">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <a href="/roladmin/">
+            <img src="{% static 'IMAGENES/registro.png' %}" alt="Registro" class="boton-registro">
+        </a>
+
+    </main>
+    <footer>
+        <img src="{% static 'IMAGENES/gov2.png' %}" alt="GOV2" class="logo-gov2">
+    </footer>
+
+    <script>
+        function redirectToLogin() {
+            window.location.href = '/login/';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .top-bar {
+            background-color: #3766CB;
+            height: 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+        header {
+            background-color: #F32E61;
+            color: white;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: auto;
+            width: 100%;
+            position: fixed;
+            top: 20px;
+            z-index: 999;
+            padding: 0 20px;
+        }
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 5px;
+            margin-top: 180px; /* Ajuste para mover más abajo */
+            position: relative; /* Agregado */
+        }
+        .graph {
+            margin: 10px;
+            text-align: center;
+        }
+        footer {
+            background-color: #3766CB;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            z-index: 999; /* Añadido para que esté sobre el contenido */
+        }
+        img.logo-gov2 {
+            height: 30px;
+            width: auto;
+            margin-right: 10px;
+        }
+        img.logo-gov {
+            height: 20px;
+            width: auto;
+            margin-left: 10px;
+        }
+        .boton-login {
+            height: 40px;
+            width: auto;
+            margin-left: 1050px; 
+            position: absolute; 
+            top: 30px;
+            cursor: pointer;
+        }
+        img#login-button {
+            display: block; 
+        }
+        img#selected-login {
+            display: none; 
+        }
+        .titulo-registro {
+            color: #F32E61;
+            font-size: 24px;
+            margin-bottom: 10px;
+            margin-top: 70px; /* Ajusta el margen superior según sea necesario */
+        }
+        /* Estilo para el rectángulo */
+        .rectangulo {
+            position: absolute;
+            background-color: #B1C4E9;
+            height: 180px; /* Altura deseada del rectángulo */
+            width: 100%; /* Ocupa toda la ventana horizontalmente */
+            bottom: -100px; /* Alinea el rectángulo al borde inferior de la ventana */
+        }
+
+        /* Estilo para las imágenes dentro del rectángulo */
+        .rectangulo img {
+            position: absolute;
+            top: 50%; /* Alinea las imágenes verticalmente */
+            transform: translateY(-50%);
+            margin: 0 auto; /* Centra horizontalmente */
+            display: block;
+        }
+
+        /* Estilo específico para cada imagen */
+        .seleccionar-archivo {
+            left: 25%; /* Espacio desde el borde izquierdo */
+            transform: translateX(-50%);
+            width: 160px; /* Ancho deseado */
+            height: auto; /* Altura automática según la proporción */
+        }
+
+        #archivo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer; /* Cambia el cursor al pasar sobre el área del input */
+        }
+
+        /* Estilo para los nuevos botones */
+        .boton-preprocesar,
+        .boton-descargar {
+            position: fixed;
+            width: 150px; /* Ancho reducido */
+            height: auto; /* Altura automática para mantener la proporción */
+            z-index: 1000; /* Asegura que estén sobre otros elementos */
+            cursor: pointer;
+        }
+
+        /* Estilo específico para el botón de preprocesar */
+        .boton-preprocesar {
+            right: 190px;
+            top: 460px;
+        }
+
+        /* Estilo específico para el botón de descargar */
+        .boton-descargar {
+            right: 20px;
+            top: 460px;
+        }
+
+        /* Estilo para las imágenes de los botones */
+        .boton-preprocesar img,
+        .boton-descargar img {
+            width: 100%; /* Ancho al 100% del contenedor */
+            height: auto; /* Altura automática para mantener la proporción */
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <img src="{% static 'IMAGENES/gov.png' %}" alt="GOV.CO" class="logo-gov">
+    </div>
+    <header>
+        <div class="login-container">
+            <img src="{% static 'IMAGENES/logo_crc.png' %}" alt="Logo CRC">
+            <!-- Eliminados los eventos y las imágenes anteriores -->
+            <img class="boton-login" id="login-button" src="{% static 'IMAGENES/boton_login.png' %}" alt="Botón Login">
+            <img class="boton-login" id="selected-login" src="{% static 'IMAGENES/login_seleccionado.png' %}" alt="Botón Login Seleccionado" style="display: none;">
+        </div>
+    </header>
+    <main>
+        <!-- Rectángulo para el anuncio -->
+        <div class="rectangulo">
+            <!-- Nueva imagen seleccionararchivo.png -->
+
+            <img src="{% static 'IMAGENES/seleccionararchivo.png' %}" alt="Seleccionar Archivo" class="seleccionar-archivo">
+            
+            <label for="archivo">
+            <img src="{% static 'IMAGENES/subirarchivo.png' %}" alt="Seleccionar Archivo" class="seleccionar-archivo" style="left: 60%;">
+            </label>
+            <input type="file" id="archivo" name="archivo" accept=".pdf, .doc, .docx, .xlsx" style="display: none;left: 60%;"> <!-- Input oculto -->
+        </div>
+        <!-- Aquí va el contenido de la página -->
+        <div class="titulo-registro"><strong>soy el adminnn</strong></div>
+    </main>
+    <footer>
+        <img src="{% static 'IMAGENES/gov2.png' %}" alt="GOV2" class="logo-gov2">
+    </footer>
+    <!-- Botón para preprocesar -->
+    <div class="boton-preprocesar">
+        <img src="{% static 'IMAGENES/botonpreprocesar.png' %}" alt="Botón Preprocesar">
+    </div>
+
+    <!-- Botón para descargar -->
+    <a href="/analista/" class="boton-descargar">
+        <img src="{% static 'IMAGENES/botondescargar.png' %}" alt="Botón Descargar">
+    </a>
+
+    <script>
+        // Función para cambiar entre los botones de login
+        function toggleLogin() {
+            var loginButton = document.getElementById('login-button');
+            var selectedLogin = document.getElementById('selected-login');
+    
+            if (loginButton.style.display === 'none') {
+                loginButton.style.display = 'block';
+                selectedLogin.style.display = 'none';
+            } else {
+                loginButton.style.display = 'none';
+                selectedLogin.style.display = 'block';
+                redirectToLogin(); // Redirigir al hacer clic en el botón de login
+            }
+        }
+    
+        // Función para redireccionar a la página de login
+        function redirectToLogin() {
+            window.location.href = '/login/'; // Redirigir a la página de login
+        }
+
+        // Agregar evento de clic al botón de login
+        document.getElementById('login-button').addEventListener('click', toggleLogin);
+    </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRC</title>
+    <style>
+        /* Tu CSS aquí */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .top-bar {
+            background-color: #3766CB;
+            height: 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+        header {
+            background-color: #F32E61;
+            color: white;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: auto;
+            width: 100%;
+            position: fixed;
+            top: 20px;
+            z-index: 999;
+            padding: 0 20px;
+        }
+        nav {
+            background: linear-gradient(to bottom, #5b5a5a, white);
+            color: black;
+            padding: 10px;
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+            position: fixed;
+            left: 0px;
+            top: 110px;
+        }
+        nav div {
+            cursor: pointer;
+            padding: 10px;
+            font-weight: bold;
+            flex: 1;
+            text-align: center;
+        }
+        nav div.active {
+            background-color: white;
+        }
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 5px;
+            margin-top: 100px;
+            position: relative;
+        }
+        .graph {
+            margin: 10px;
+            text-align: center;
+        }
+        footer {
+            background-color: #3766CB;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+        img.logo-gov2 {
+            height: 30px;
+            width: auto;
+            margin-right: 10px;
+        }
+        img.logo-gov {
+            height: 20px;
+            width: auto;
+            margin-left: 10px;
+        }
+        img.boton-login {
+            height: 40px;
+            width: auto;
+            margin-left: 1050px;
+            position: absolute;
+            top: 30px;
+            cursor: pointer;
+        }
+        img#login-button {
+            display: block;
+        }
+        img#selected-login {
+            display: none;
+        }
+        .titulo-registro {
+            color: #F32E61;
+            font-size: 24px;
+            margin-bottom: 10px;
+            margin-top: 70px;
+            margin-left: 0px;
+        }
+        .calendar-container {
+            text-align: left;
+            position: absolute;
+            left: 20px;
+            top: 100px;
+        }
+        .startdate {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #F32E61;
+            background-color: #FEE9EC;
+            width: 200px;
+        }
+        .dropdown-container-indice {
+            position: absolute;
+            top: 150px;
+            left: 20px;
+            width: 200px;
+        }
+        .dropdown-container-indice label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .dropdown-container-indice select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #F32E61;
+            background-color: #FEE9EC;
+            font-size: 16px;
+        }
+        .graph-container {
+            position: absolute;
+            top: 150px;
+            left: 250px;
+            width: 60%;
+            display: flex;
+            justify-content: space-around; /* Distribuir las imágenes equitativamente */
+        }
+        .boton-descargar {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            cursor: pointer;
+            top: 370px;
+        }
+        .boton-descargar-sm {
+            height: 40px;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <img src="static/IMAGENES/gov.png" alt="GOV.CO" class="logo-gov">
+    </div>
+    <header>
+        <div class="login-container">
+            <img src="static/IMAGENES/logo_crc.png" alt="Logo CRC">
+            <img class="boton-login" id="login-button" src="static/IMAGENES/boton_login.png" alt="Botón Login" onclick="toggleLogin()">
+            <img class="boton-login" id="selected-login" src="static/IMAGENES/login_seleccionado.png" alt="Botón Login Seleccionado" onclick="toggleLogin()" style="display: none;">
+        </div>
+        <nav>
+            <div class="nav-item" onclick="selectNavItem(this)">Inicio</div>
+            <div class="nav-item" onclick="selectNavItem(this)">Ver Histórico</div>
+            <div class="nav-item" onclick="selectNavItem(this)">Realizar Tendencia</div>
+            <div class="nav-item" onclick="selectNavItem(this)">Resultados índices</div>
+        </nav>
+    </header>
+    <main>
+        <div class="titulo-registro"><strong>Bienvenido a Realizar Tendencia</strong></div>
+        <div class="calendar-container">
+            <label for="start"></label>
+            <input class="startdate" type="date" id="start" name="trip-start" min="2020-01-01" />
+        </div>
+        <div class="dropdown-container-indice">
+            <label for="indice">Índice:</label>
+            <select id="indice" name="indice">
+                <option value="valor1">Ingresos internet fijo</option>
+                <option value="valor2">Ingresos internet móvil</option>
+                <option value="valor3">Tráfico de red</option>
+            </select>
+        </div>
+        <div class="graph-container">
+            <div class="graph">
+                <img src="static/IMAGENES/stenbacka_graph.png" alt="Gráfica de Stenbacka">
+            </div>
+            <div class="graph">
+                <img src="static/IMAGENES/sten2.png" alt="Gráfica de Stenbacka 2">
+            </div>
+            <div class="graph">
+                <img src="static/IMAGENES/sten3.png" alt="Gráfica de Stenbacka 3">
+            </div>
+            <div class="boton-descargar">
+                <img src="static/IMAGENES/Boton_Descargar.png" alt="Botón Descargar" class="boton-descargar-sm">
+            </div>
+        </div>
+    </main>
+    <footer>
+        <img src="static/IMAGENES/logo_crc.png" alt="Logo CRC" class="logo-gov2">
+        <div>© Comisión de Regulación de Comunicaciones</div>
+    </footer>
+    <script>
+        function selectNavItem(item) {
+            var navItems = document.getElementsByClassName('nav-item');
+            for (var i = 0; i < navItems.length; i++) {
+                navItems[i].classList.remove('active');
+            }
+            item.classList.add('active');
+        }
+
+        function toggleLogin() {
+            var loginButton = document.getElementById('login-button');
+            var selectedLogin = document.getElementById('selected-login');
+            if (loginButton.style.display === 'none') {
+                loginButton.style.display = 'block';
+                selectedLogin.style.display = 'none';
+            } else {
+                loginButton.style.display = 'none';
+                selectedLogin.style.display = 'block';
+                redirectToLogin();
+            }
+        }
+
+        function redirectToLogin() {
+            window.location.href = '/login/';
+        }
+    </script>
+</body>
+</html>
